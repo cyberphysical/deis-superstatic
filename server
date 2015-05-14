@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+var flatten = require('flat');
+var nconf = require('nconf');
+var superstatic = require('superstatic').server;
+
+var confDelimiter = "__";
+
+var envConfigPath = process.cwd() + '/config/' + (process.env.NODE_ENV || "production") + '.json'
+var defaultConfigPath = process.cwd() + '/.env.json';
+
+var envConfig = require(envConfigPath);
+var defaultConfig = require(defaultConfigPath);
+
+var envKeys = Object.keys(flatten(envConfig, {delimiter: confDelimiter}));
+var defaultKeys = Object.keys(flatten(defaultConfig, {delimiter: confDelimiter}));
+
+nconf
+  .env({
+    separator: confDelimiter,
+    whitelist: envKeys.concat(defaultKeys) // Only whitelist keys already defined in files
+  });
+
+if (envKeys.length > 0) {
+  nconf.file('environment_config', envConfigPath);
+}
+if (defaultKeys.length > 0) {
+  nconf.file('default',  defaultConfigPath);
+} 
+
+
+var port = process.env.PORT || 5000;
+var spec = {
+  host: '0.0.0.0',
+  port: port,
+  env: nconf.load(),
+  gzip: true,
+  debug: false
+};
+
+var app = superstatic(spec);
+
+var server = app.listen(function (err) {
+  console.log('Superstatic now serving on port ' + port + ' ...');
+});

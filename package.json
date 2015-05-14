@@ -1,0 +1,32 @@
+{
+  "name": "deis-superstatic",
+  "version": "1.0.8",
+  "description": "Start a superstatic server with more manageable configuration options. Useful for deis/heroku type development",
+  "main": "server",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cyberphysical/deis-superstatic.git"
+  },
+  "bin": {
+    "deis-superstatic": "server"
+  },
+  "keywords": [
+    "deis",
+    "heroku",
+    "superstatic"
+  ],
+  "author": "Chuck Swanberg <cswanberg@mad-swan.com>",
+  "license": "Mit",
+  "bugs": {
+    "url": "https://github.com/cyberphysical/deis-superstatic/issues"
+  },
+  "homepage": "https://github.com/cyberphysical/deis-superstatic",
+  "dependencies": {
+    "flat": "^1.5.1",
+    "nconf": "^0.7.1",
+    "superstatic": "^2.2.0"
+  }
+}
